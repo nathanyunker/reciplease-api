@@ -15,6 +15,13 @@ var RecipeSchema = new Schema({
     type: Number,
     Required: 'Please enter the calorie count for the recipe.'
   },
+  numberOfServings: {
+    type: Number,
+    Required: 'Please enter the calorie count for the recipe.'
+  },
+  directions: [{
+    type: String
+  }],
   ingredients: [{
     name: { type: String, default: '' },
     measure: { type: String, default: ''},

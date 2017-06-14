@@ -4,7 +4,7 @@ module.exports = function(app) {
 
 
   // todoList Routes
-  app.route('/recipes')
+  app.route('/recipe')
     .get(recipe.list_all_recipes)
     .post(recipe.create_a_recipe);
 

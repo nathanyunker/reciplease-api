@@ -15,7 +15,10 @@ exports.list_all_recipes = function(req, res) {
 
 
 exports.create_a_recipe = function(req, res) {
+  console.log('req', req);
+  console.log('res', res);
   var new_recipe = new Recipe(req.body);
+  console.log('new_recipe', new_recipe);
   new_recipe.save(function(err, recipe) {
     if (err)
       res.send(err);
@@ -43,6 +46,9 @@ exports.update_a_recipe = function(req, res) {
 
 
 exports.delete_a_recipe = function(req, res) {
+  console.log('req', req);
+  console.log('res', res);
+
   Recipe.remove({
     _id: req.params.recipeId
   }, function(err, recipe) {
