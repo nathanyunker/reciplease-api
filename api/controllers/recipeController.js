@@ -15,8 +15,6 @@ exports.list_all_recipes = function(req, res) {
 
 
 exports.create_a_recipe = function(req, res) {
-  console.log('req', req);
-  console.log('res', res);
   var new_recipe = new Recipe(req.body);
   console.log('new_recipe', new_recipe);
   new_recipe.save(function(err, recipe) {
