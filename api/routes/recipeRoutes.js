@@ -2,8 +2,6 @@
 module.exports = function(app) {
   var recipe = require('../controllers/recipeController');
 
-
-  // todoList Routes
   app.route('/recipe')
     .get(recipe.list_all_recipes)
     .post(recipe.create_a_recipe);
