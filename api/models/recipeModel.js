@@ -29,7 +29,7 @@ var RecipeSchema = new Schema({
   },
   sourceLink: {
     type: String
-  },
+  }
 });
 
 module.exports = mongoose.model('Recipes', RecipeSchema);
