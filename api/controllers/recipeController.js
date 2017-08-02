@@ -14,7 +14,6 @@ exports.list_all_recipes = function(req, res) {
 
 exports.create_a_recipe = function(req, res) {
   var new_recipe = new Recipe(req.body);
-  console.log('New Recipe:', new_recipe);
   new_recipe.save(function(err, recipe) {
     if (err)
       res.send(err);
@@ -33,7 +32,7 @@ exports.read_a_recipe = function(req, res) {
 
 
 exports.update_a_recipe = function(req, res) {
-  Recipe.findOneAndUpdate(req.params.recipeId, req.body, {new: true}, function(err, recipe) {
+  Recipe.findOneAndUpdate({_id: req.params.recipeId}, req.body, {new: true}, function(err, recipe) {
     if (err)
       res.send(err);
     res.json(recipe);
