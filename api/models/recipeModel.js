@@ -1,9 +1,9 @@
 'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
 
-var RecipeSchema = new Schema({
+let RecipeSchema = new Schema({
   calorieCount: {
     type: Number,
     Required: 'Please enter the calorie count for the recipe.'

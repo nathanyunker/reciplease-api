@@ -1,12 +1,19 @@
-var express = require('express'),
-  app = express(),
-  port = process.env.PORT || 3000,
-  mongoose = require('mongoose'),
-  Recipe = require('./api/models/recipeModel'),
-  bodyParser = require('body-parser');
+let express = require('express');
+let app = express();
+let config = require('./dbconfig');
+let port = process.env.PORT || 3000;
+let mongoose = require('mongoose');
+let bodyParser = require('body-parser');
   
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/Recipedb'); 
+
+mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
+  if(err) {
+    console.log('Error connecting to the database. ' + err);
+  } else {
+    console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
+  }
+});
 
 // Add headers for CORS
 app.use(function (req, res, next) {
@@ -33,11 +40,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-var routes = require('./api/routes/recipeRoutes');
+let routes = require('./api/routes/recipeRoutes');
 routes(app);
 
 
-app.listen(port);
+let server = app.listen(port);
 
 // reference https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
 console.log('todo list RESTful API server started on: ' + port);
+
+module.exports = server;
