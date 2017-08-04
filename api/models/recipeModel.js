@@ -6,7 +6,7 @@ let Schema = mongoose.Schema;
 let RecipeSchema = new Schema({
   calorieCount: {
     type: Number,
-    Required: 'Please enter the calorie count for the recipe.'
+    required: [true, 'Calorie Count is required']
   },
   description: {
     type: String
@@ -21,11 +21,11 @@ let RecipeSchema = new Schema({
   }],
   name: {
     type: String,
-    Required: 'Please enter the name of the recipe.'
+    required: [true, 'Recipe name is required']
   },
   numberOfServings: {
     type: Number,
-    Required: 'Please enter the calorie count for the recipe.'
+    required: [true, 'Number of Servings is required']
   },
   sourceLink: {
     type: String

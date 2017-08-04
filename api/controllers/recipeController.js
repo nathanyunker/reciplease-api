@@ -1,15 +1,14 @@
 'use strict';
 
-let mongoose = require('mongoose'),
-  Recipe = require('../models/recipeModel'),
-  recipeUtility = require('../utilities/recipeUtilities');
+let Recipe = require('../models/recipeModel');
+let recipeUtility = require('../utilities/recipeUtilities');
 
 exports.list_all_recipes = function(req, res) {
   Recipe.find({}, function(err, recipes) {
     let response = {};
 
     if (err) {
-      response.message = "Unknown Service Error";
+      response.messages = ["Unknown Service Error"];
     } else {
       response.recipes = recipes;
     }
@@ -24,14 +23,17 @@ exports.create_a_recipe = function(req, res) {
 
   new_recipe.save(function(err, recipe) {
     let response = {};
+    let statusCode = 200;
 
     if (err) {
-      response.messages = "Unknown Service Error";
+      response.messages = recipeUtility.checkRecipeValidity(err.errors);
+      statusCode = recipeUtility.checkStatusCode(err);
     } else {
       response.recipe = recipe;
+      statusCode = 200;
     }
 
-    res.json(response);
+    res.json(statusCode, response);
   });
 };
 
@@ -39,18 +41,21 @@ exports.create_a_recipe = function(req, res) {
 exports.read_a_recipe = function(req, res) {
   Recipe.findById(req.params.recipeId, function(err, recipe) {
     let response = {};
+    let statusCode = 200;
 
     if (err) {
-      response.message = recipeUtility.checkRecipeIdValidity(err);
+      response.messages = [recipeUtility.checkRecipeIdValidity(err)];
+      statusCode = recipeUtility.checkStatusCode(err);
     } else {
-      if (recipe === null) {
-        response.message = "No Recipe Was Found With ID: " + req.params.recipeId
+      if (recipe === null || recipe === undefined) {
+        response.messages = ["No Recipe Was Found With ID: " + req.params.recipeId];
+        statusCode = 404;
       } else {
         response.recipe = recipe;
       }
-
-      res.json(response);
     }
+
+    res.json(statusCode, response);
   });
 };
 
@@ -58,14 +63,21 @@ exports.read_a_recipe = function(req, res) {
 exports.update_a_recipe = function(req, res) {
   Recipe.findOneAndUpdate({_id: req.params.recipeId}, req.body, {new: true}, function(err, recipe) {
     let response = {};
+    let statusCode = 200;
 
     if (err) {
-      response.message = "Unknown Service Error";
+      response.messages = [recipeUtility.checkRecipeIdValidity(err)];
+      statusCode = recipeUtility.checkStatusCode(err);
     } else {
-      response.recipe = recipe;
+      if (recipe === null) {
+        response.messages = ["No Recipe Was Found With ID: " + req.params.recipeId];
+        statusCode = 404;
+      } else {
+        response.recipe = recipe;
+      }
     }
 
-    res.json(response);
+    res.json(statusCode, response);
   });
 };
 
@@ -73,13 +85,20 @@ exports.update_a_recipe = function(req, res) {
 exports.delete_a_recipe = function(req, res) {
   Recipe.remove({_id: req.params.recipeId}, function(err, recipe) {
     let response = {};
+    let statusCode = 200;
 
     if (err) {
-      response.messages = recipeUtility.checkRecipeIdValidity(err);
+      response.messages = [recipeUtility.checkRecipeIdValidity(err)];
+      statusCode = recipeUtility.checkStatusCode(err);
     } else {
-      response.recipe = recipe;
+      if (recipe.result.n === 0) {
+        response.messages = ["No Recipe Was Found With ID: " + req.params.recipeId];
+        statusCode = 404;
+      } else {
+        response.recipe = recipe.result;
+      }
     }
 
-    res.json(response);
+    res.json(statusCode, response);
   });
 };

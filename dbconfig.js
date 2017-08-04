@@ -1,7 +1,7 @@
 let config = {};
 
 config.mongoURI = {
-  dev: 'mongodb://localhost/Recipedb',
+  development: 'mongodb://localhost/Recipedb',
   test: 'mongodb://localhost/Recipedb-test'
 };
 
