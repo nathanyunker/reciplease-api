@@ -134,6 +134,66 @@ describe('Recipes', function() {
             done();
           });
     });
+
+    it('should thrown an error if recipe has no calorieCount', function(done) {
+      let recipeToAdd = Object.assign({}, mockRecipes.all[1]);
+      delete recipeToAdd.calorieCount;
+
+      chai.request(server)
+          .post('/recipes')
+          .send(recipeToAdd)
+          .end(function(err, res) {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            res.body.messages[0].should.equal('Calorie Count is required');
+            done();
+          });
+    });
+
+    it('should thrown an error if recipe has no numberOfServings', function(done) {
+      let recipeToAdd = Object.assign({}, mockRecipes.all[1]);
+      delete recipeToAdd.numberOfServings;
+
+      chai.request(server)
+          .post('/recipes')
+          .send(recipeToAdd)
+          .end(function(err, res) {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            res.body.messages[0].should.equal('Number of Servings is required');
+            done();
+          });
+    });
+
+    it('should thrown an error if recipe has numberOfServings is not a number', function(done) {
+      let recipeToAdd = Object.assign({}, mockRecipes.all[1]);
+      recipeToAdd.numberOfServings = 'A string';
+
+      chai.request(server)
+          .post('/recipes')
+          .send(recipeToAdd)
+          .end(function(err, res) {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            res.body.messages[0].should.equal('Number of Servings cannot be "A string". Should be a Number');
+            done();
+          });
+    });
+
+    it('should thrown an error if recipe has calorieCount is not a number', function(done) {
+      let recipeToAdd = Object.assign({}, mockRecipes.all[1]);
+      recipeToAdd.calorieCount = 'A string';
+
+      chai.request(server)
+          .post('/recipes')
+          .send(recipeToAdd)
+          .end(function(err, res) {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            res.body.messages[0].should.equal('Calorie Count cannot be "A string". Should be a Number');
+            done();
+          });
+    });
   });
 
   describe('PUT requests', function() {

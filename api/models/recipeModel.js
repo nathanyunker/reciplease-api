@@ -4,10 +4,16 @@ let Schema = mongoose.Schema;
 
 
 let RecipeSchema = new Schema({
+  attributes: [{
+    type: String
+  }],
   calorieCount: {
     type: Number,
     required: [true, 'Calorie Count is required']
   },
+  categories: [{
+    type: String
+  }],
   description: {
     type: String
   },
