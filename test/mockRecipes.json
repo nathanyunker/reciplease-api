@@ -1,0 +1,44 @@
+{
+  "all": [
+    {
+      "_id": "59822144e30ba809449c6fe2",
+      "calorieCount": 100,
+      "description": "The first recipe",
+      "name": "First Recipe",
+      "numberOfServings": 4,
+      "sourceLink": "www.firstrecipe.com",
+      "ingredients": [
+        {
+          "value": 1,
+          "measure": "cup",
+          "name": "things"
+        },
+        {
+          "value": 1,
+          "measure": "tbsp",
+          "name": "stuff"
+        }
+      ],
+      "directions": [
+        "Mix it together"
+      ]
+    },
+    {
+      "calorieCount": 200,
+      "description": "The second recipe",
+      "name": "Second Recipe",
+      "numberOfServings": 2,
+      "sourceLink": "www.secondrecipe.com",
+      "ingredients": [
+        {
+          "value": 1,
+          "measure": "gallon",
+          "name": "recipe"
+        }
+      ],
+      "directions": [
+        "Just pour and enjoy"
+      ]
+    }
+  ]
+}

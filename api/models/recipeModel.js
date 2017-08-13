@@ -1,13 +1,19 @@
 'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
 
-var RecipeSchema = new Schema({
+let RecipeSchema = new Schema({
+  attributes: [{
+    type: String
+  }],
   calorieCount: {
     type: Number,
-    Required: 'Please enter the calorie count for the recipe.'
+    required: [true, 'Calorie Count is required']
   },
+  categories: [{
+    type: String
+  }],
   description: {
     type: String
   },
@@ -21,15 +27,15 @@ var RecipeSchema = new Schema({
   }],
   name: {
     type: String,
-    Required: 'Please enter the name of the recipe.'
+    required: [true, 'Recipe name is required']
   },
   numberOfServings: {
     type: Number,
-    Required: 'Please enter the calorie count for the recipe.'
+    required: [true, 'Number of Servings is required']
   },
   sourceLink: {
     type: String
-  },
+  }
 });
 
 module.exports = mongoose.model('Recipes', RecipeSchema);
