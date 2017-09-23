@@ -10,7 +10,7 @@ mongoose.Promise = global.Promise;
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
 
-mongoose.connect(process.env.MONGODB_URI, function(err, res) {
+mongoose.connect(process.env.MONGODB_URI, function(err, database) {
   if(err) {
     console.log('Error connecting to the database. ' + err);
   } else {
