@@ -15,9 +15,14 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
+    "connect-flash": "^0.1.1",
     "express": "^4.15.2",
+    "express-session": "^1.15.6",
     "mocha": "^3.5.0",
-    "mongoose": "^4.9.7"
+    "mongoose": "^4.9.7",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
   }
 }
