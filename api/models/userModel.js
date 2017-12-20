@@ -13,7 +13,8 @@ let UserSchema = new Schema({
     },
     email: {
       type: String,
-      required: [true, 'email is required']
+      required: [true, 'email is required'],
+      index: { unique: true }
     },
     gender: {
       type: String

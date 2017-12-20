@@ -1,6 +1,6 @@
 let express = require('express');
 let app = express();
-let config = require('./dbconfig');
+let config = require('./config');
 let port = process.env.PORT || 3000;
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
@@ -36,7 +36,8 @@ var passport = require('passport');
 var expressSession = require('express-session');
 app.use(expressSession({secret: 'reciplease'}));
 app.use(passport.initialize());
-app.use(passport.session());
+//TODO: DELETE this if moving to jwt, with no session needed
+//app.use(passport.session());
 var initPassport = require('./api/lib/passport/init');
 initPassport(passport);
 
