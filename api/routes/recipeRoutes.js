@@ -1,6 +1,7 @@
 'use strict';
 module.exports = function(app) {
   let recipe = require('../controllers/recipeController');
+  let user = require('../controllers/userController');
   const passport = require('passport')
 
   //TODO move this into pass port service
@@ -30,10 +31,12 @@ module.exports = function(app) {
     .delete(recipe.delete_a_recipe);
 
   app.route('/login')
-    .post(passport.authenticate('login', {
-        successRedirect: '/home',
-        failureRedirect: '/',
-        failureFlash : true 
+    .post(passport.authenticate('login', function(err, user1, info) {
+      if (err) { user.login(err); }
+      if (!user1) { user.login() }
+      console.log('THE err', err);
+      console.log('THE user', user);
+      console.log('THE info', info);
     }));
 
   app.route('/signup')

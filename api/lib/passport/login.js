@@ -11,6 +11,10 @@ module.exports = function(passport){
             passReqToCallback : true
         },
         function(req, username, password, done) { 
+            console.log('req', req.body);
+            console.log('username', username);
+            console.log('password', password);
+            console.log('done', done);
             // check in mongo if a user with username exists or not
             User.findOne({ 'username' :  username }, 
                 function(err, user) {
@@ -19,8 +23,9 @@ module.exports = function(passport){
                         return done(err);
                     // Username does not exist, log the error and redirect back
                     if (!user) {
-                        console.log('User Not Found with username '+username);
-                        return done(null, false, req.flash('message', 'User Not found.'));                 
+                        console.log('User Not Found with username '+ username);
+                        req.flash('message', 'User Not found.')
+                        return done(null, false, req.flash());                 
                     }
                     // User exists but wrong password, log the error 
                     if (!isValidPassword(user, password)) {
@@ -29,7 +34,7 @@ module.exports = function(passport){
                     }
                     // User and password both match, return user from done method
                     // which will be treated like success
-                    const token = jwt.sign(payload, config.jwtSecret);
+                    const token = jwt.sign(payload, config.jwt.jwtSecret);
                     return done(null, token, user);
                 }
             );
