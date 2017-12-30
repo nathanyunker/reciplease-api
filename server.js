@@ -1,9 +1,11 @@
 let express = require('express');
 let app = express();
-let config = require('./dbconfig');
+let config = require('./config/main.js');
 let port = process.env.PORT || 3000;
 let mongoose = require('mongoose');
-let bodyParser = require('body-parser');
+var bodyParser = require('body-parser');  
+var morgan = require('morgan');  
+var passport = require('passport');  
   
 mongoose.Promise = global.Promise;
 
@@ -27,8 +29,22 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-let routes = require('./api/routes/recipeRoutes');
-routes(app);
+//Using passport security
+app.use(passport.initialize());  
+app.use(passport.session());
+require('./config/passport')(passport);  
+
+//TODO: re-evaluate the following half-dozen lines
+app.use(morgan('dev'));
+// Home route. We'll end up changing this to our main front end index later.
+app.get('/', function(req, res) {  
+  res.send('Relax. We will put the home page here later.');
+});
+
+let recipeRoutes = require('./api/routes/recipeRoutes');
+let userRoutes = require('./api/routes/userRoutes');
+recipeRoutes(app);
+userRoutes(app);
 
 
 let server = app.listen(port);
