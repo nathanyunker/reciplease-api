@@ -23,13 +23,18 @@ exports.register = function(req, res) {
 };
 
 exports.authenticate = function(req, res) {
+    let response = {};
+    let statusCode = 200;
+
     User.findOne({
         email: req.body.email
     }, function(err, user) {
             if (err) throw err;
 
             if (!user) {
-                res.send({ success: false, message: 'Authentication failed. User not found.' });
+                statusCode = 401;
+                response.messages = [{message: 'Authentication failed. User not found.'}];
+                res.json(statusCode, response);
             } else {
                 // Check if password matches
                 user.comparePassword(req.body.password, function(err, isMatch) {
@@ -38,12 +43,15 @@ exports.authenticate = function(req, res) {
                     var token = jwt.sign(user.toJSON(), config.auth.secret, {
                         expiresIn: 10080 // in seconds
                     });
-                    res.json({ success: true, token: 'JWT ' + token });
+                    response.token = 'JWT ' + token;
+                    response.user = user;
+                    res.json(statusCode, response);
                 } else {
-                    res.send({ success: false, message: 'Authentication failed. Passwords did not match.' });
+                    statusCode = 401;
+                    response.messages = 'Authentication failed. Passwords did not match.';
+                    res.json(statusCode, response);
                 }
                 });
             }
     });
 };
-
