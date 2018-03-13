@@ -33,6 +33,9 @@ let RecipeSchema = new Schema({
     type: Number,
     required: [true, 'Number of Servings is required']
   },
+  imageLink: {
+    type: String
+  },
   sourceLink: {
     type: String
   }
