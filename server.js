@@ -9,12 +9,19 @@ var passport = require('passport');
   
 mongoose.Promise = global.Promise;
 
-mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
+// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
+var db;
+
+mongoose.connect(process.env.MONGODB_URI, function(err, database) {
   if(err) {
     console.log('Error connecting to the database. ' + err);
   } else {
-    console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
+    console.log('Connected to Database: ' + process.env.MONGODB_URI);
   }
+
+  // Save database object from the callback for reuse.
+  db = database;
+  console.log("Database connection ready");
 });
 
 app.use(function (req, res, next) {
