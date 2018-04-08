@@ -1,3 +1,4 @@
+console.log('HERE WE ARE KICKING OFF OUR SERVER');
 let express = require('express');
 let app = express();
 let config = require('./config/main.js');
@@ -27,6 +28,8 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, database) {
 
 app.use(function (req, res, next) {
 
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    //res.setHeader('Access-Control-Allow-Origin', 'https://secret-wave-23471.herokuapp.com');
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
