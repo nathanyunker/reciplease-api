@@ -27,10 +27,15 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, database) {
 });
 
 app.use(function (req, res, next) {
+  if (app.settings.env === "production") {
+    console.log('APP settings are production, allowign that origin');
+    res.setHeader('Access-Control-Allow-Origin', 'https://secret-wave-23471.herokuapp.com');
+  } else {
+    console.log('APP settings are not production, allowign that localhost');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+  }
 
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Origin', 'https://secret-wave-23471.herokuapp.com');
-    //res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
