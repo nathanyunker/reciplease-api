@@ -29,7 +29,7 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, database) {
 app.use(function (req, res, next) {
 
     res.setHeader('Access-Control-Allow-Origin', '*');
-    //res.setHeader('Access-Control-Allow-Origin', 'https://secret-wave-23471.herokuapp.com');
+    res.setHeader('Access-Control-Allow-Origin', 'https://secret-wave-23471.herokuapp.com');
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
@@ -49,7 +49,7 @@ require('./config/passport')(passport);
 app.use(morgan('dev'));
 // Home route. We'll end up changing this to our main front end index later.
 app.get('/', function(req, res) {  
-  res.send('Relax. We will put the home page here later.');
+  res.send('Reciplease API');
 });
 
 let recipeRoutes = require('./api/routes/recipeRoutes');
