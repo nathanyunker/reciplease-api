@@ -7,4 +7,7 @@ module.exports = function(app) {
 
     app.route('/user/authenticate')
         .post(user.authenticate);
+
+    app.route('/user/secrets/reddit')
+        .post(user.update_reddit_secret);
 };

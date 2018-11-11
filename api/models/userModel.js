@@ -18,6 +18,9 @@ var UserSchema = new Schema({
       type: String,
       enum: ['Client', 'Manager', 'Admin'],
       default: 'Client'
+    },
+    redditSecret: {
+      type: String
     }
   });
   
