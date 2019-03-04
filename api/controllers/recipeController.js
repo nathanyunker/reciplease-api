@@ -91,7 +91,6 @@ exports.delete_a_recipe = function(req, res) {
       response.messages = [recipeUtility.checkRecipeIdValidity(err)];
       statusCode = recipeUtility.checkStatusCode(err);
     } else {
-      console.log('WHAT IS THE RECIPE IN THIS SITUATION-0----------------------', recipe);
       if (recipe.n === 0) {
         response.messages = ["No Recipe Was Found With ID: " + req.params.recipeId];
         statusCode = 404;
