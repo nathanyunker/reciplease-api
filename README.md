@@ -1,7 +1,7 @@
 # reciplease-api
-Back-end API layer for Reciplease
+Back-end API for Reciplease
 
 # To run
 -npm install
--install mongo with a Recipedb database
+-install mongo and start
 -npm run start

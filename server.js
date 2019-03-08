@@ -12,8 +12,6 @@ mongoose.Promise = global.Promise;
 
 var db;
 
-console.log('OUR ENVIRONMENT IS----------------------', app.settings.env);
-
 mongoose.connect(config.mongoURI[app.settings.env], function(err, database) {
   if(err) {
     console.log('Error connecting to the database. ' + err);
